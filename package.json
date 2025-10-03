@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test"
+    "test": "npx playwright test",
+    "test:puplit:headed": "npm run test tests/pulpit_tests.spec.ts -- --headed"
   },
   "keywords": [],
   "author": "",
@@ -11,7 +12,6 @@
   "description": "",
   "devDependencies": {
     "@playwright/test": "^1.55.1",
-    "@types/node": "^24.6.2",
-    "prettier": "2.8.4"
+    "@types/node": "^24.6.2"
   }
 }
