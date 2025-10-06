@@ -12,9 +12,7 @@ test.describe("Pulpit tests", () => {
 
     const loginPage = new LoginPage(page);
 
-    await loginPage.loginInput.fill(username);
-    await loginPage.passwordInput.fill(userpassword);
-    await loginPage.loginButton.click();
+    loginPage.login(username, userpassword);
   });
 
   test("quick payment with correct data", async ({ page }) => {

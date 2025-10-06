@@ -12,11 +12,9 @@ test.describe("Payment tests", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(URL);
 
-    // const paymentPage = new PaymentPage(page);
     const loginPage = new LoginPage(page);
-    await loginPage.loginInput.fill(username);
-    await loginPage.passwordInput.fill(userpassword);
-    await loginPage.loginButton.click();
+
+    loginPage.login(username, userpassword);
 
     const pulpitPage = new PulpitPage(page);
     await pulpitPage.sideMenuComponent.paymentButton.click();

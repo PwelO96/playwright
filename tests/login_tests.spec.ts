@@ -1,23 +1,28 @@
 import { test, expect } from "@playwright/test";
 import { loginData } from "../test-data/login.data";
 import { LoginPage } from "../pages/login.page";
+import { PulpitPage } from "../pages/pulpit.pages";
 
 test.describe("User login to Demobank", () => {
   // Arrange
   const URL = "https://demo-bank.vercel.app";
   const username = loginData.username;
   const userpassword = loginData.password;
+  const expectedUserName = "Jan Demobankowy";
+  let loginPage: LoginPage;
+
+  test.beforeEach(async ({ page }) => {
+    loginPage = new LoginPage(page);
+  });
 
   test("successful login with correct credentials", async ({ page }) => {
     // Act
     await page.goto(URL);
-    const loginPage = new LoginPage(page);
-    await loginPage.loginInput.fill(username);
-    await loginPage.passwordInput.fill(userpassword);
-    await loginPage.loginButton.click();
+    await loginPage.login(username, userpassword);
 
     // Assert
-    await expect(page.getByTestId("user-name")).toHaveText("Jan Demobankowy");
+    const pulpitPage = new PulpitPage(page);
+    await expect(pulpitPage.userNameText).toHaveText(expectedUserName);
   });
 
   test("unsuccessful login with too short username", async ({ page }) => {
@@ -27,7 +32,6 @@ test.describe("User login to Demobank", () => {
     // Act
     await page.goto(URL);
 
-    const loginPage = new LoginPage(page);
     await loginPage.loginInput.fill(incorrectUsername);
     await loginPage.loginInput.blur();
 
@@ -44,7 +48,6 @@ test.describe("User login to Demobank", () => {
     // Act
     await page.goto(URL);
 
-    const loginPage = new LoginPage(page);
     await loginPage.loginInput.fill(username);
     await loginPage.passwordInput.fill(incorrectPassword);
     await loginPage.passwordInput.blur();
