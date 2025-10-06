@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { loginData } from "../test-data/login.data";
+import { LoginPage } from "../pages/login.page";
 
 test.describe("User login to Demobank", () => {
   // Arrange
@@ -10,9 +11,10 @@ test.describe("User login to Demobank", () => {
   test("successful login with correct credentials", async ({ page }) => {
     // Act
     await page.goto(URL);
-    await page.getByTestId("login-input").fill(username);
-    await page.getByTestId("password-input").fill(userpassword);
-    await page.getByTestId("login-button").click();
+    const loginPage = new LoginPage(page);
+    await loginPage.loginInput.fill(username);
+    await loginPage.passwordInput.fill(userpassword);
+    await loginPage.loginButton.click();
 
     // Assert
     await expect(page.getByTestId("user-name")).toHaveText("Jan Demobankowy");

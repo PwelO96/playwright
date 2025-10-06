@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { loginData } from "../test-data/login.data";
+import { LoginPage } from "../pages/login.page";
 
 test.describe("Pulpit tests", () => {
   const URL = "https://demo-bank.vercel.app";
@@ -9,9 +10,11 @@ test.describe("Pulpit tests", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(URL);
 
-    await page.getByTestId("login-input").fill(username);
-    await page.getByTestId("password-input").fill(userpassword);
-    await page.getByTestId("login-button").click();
+    const loginPage = new LoginPage(page);
+
+    await loginPage.loginInput.fill(username);
+    await loginPage.passwordInput.fill(userpassword);
+    await loginPage.loginButton.click();
   });
 
   test("quick payment with correct data", async ({ page }) => {
