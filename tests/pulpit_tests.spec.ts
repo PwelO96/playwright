@@ -1,9 +1,10 @@
 import { test, expect } from "@playwright/test";
+import { loginData } from "../test-data/login.data";
 
 test.describe("Pulpit tests", () => {
   const URL = "https://demo-bank.vercel.app";
-  const username = "tester12";
-  const userpassword = "12345678";
+  const username = loginData.username;
+  const userpassword = loginData.password;
 
   test.beforeEach(async ({ page }) => {
     await page.goto(URL);
@@ -41,9 +42,7 @@ test.describe("Pulpit tests", () => {
     );
   });
 
-  test.only("correct balance after successful mobile top-up", async ({
-    page,
-  }) => {
+  test("correct balance after successful mobile top-up", async ({ page }) => {
     const receiverOption = "500 xxx xxx";
     const amount = "50";
     const initialBalance = await page.locator("#money_value").innerText();

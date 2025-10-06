@@ -1,10 +1,11 @@
 import { test, expect } from "@playwright/test";
+import { loginData } from "../test-data/login.data";
 
 test.describe("User login to Demobank", () => {
   // Arrange
   const URL = "https://demo-bank.vercel.app";
-  const username = "tester12";
-  const userpassword = "12345678";
+  const username = loginData.username;
+  const userpassword = loginData.password;
 
   test("successful login with correct credentials", async ({ page }) => {
     // Act
