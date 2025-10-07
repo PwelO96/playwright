@@ -42,4 +42,12 @@ export class PulpitPage {
     this.moneyValueText = this.page.locator("#money_value");
     this.userNameText = this.page.getByTestId("user-name");
   }
+
+  async phoneTopUp(receiverOption: string, amount: string): Promise<void> {
+    await this.topUpReceiverInput.selectOption(receiverOption);
+    await this.topUpAmountInput.fill(amount);
+    await this.topUpAgreementCheckbox.click();
+    await this.topUpExecuteButton.click();
+    await this.actionCloseButton.click();
+  }
 }
